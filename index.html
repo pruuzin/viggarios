@@ -122,7 +122,17 @@
 
         function fugir() {
             if (!fugindo) {
-                // Move o botão "Não" para o container para começar a fugir
+                // Move o botão "Não" para o container
+                const botoesRect = botoes.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+
+                const offsetX = botoesRect.left - containerRect.left;
+                const offsetY = botoesRect.top - containerRect.top;
+
+                // Posição inicial alinhada
+                botaoNao.style.left = (offsetX + botaoNao.offsetLeft) + 'px';
+                botaoNao.style.top = (offsetY + botaoNao.offsetTop) + 'px';
+
                 container.appendChild(botaoNao);
                 botaoNao.style.position = 'absolute';
                 fugindo = true;
