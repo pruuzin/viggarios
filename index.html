@@ -18,15 +18,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
             font-family: Arial, sans-serif;
-            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            background-color: #3a3a3a;
+            width: 90%;
+            max-width: 500px;
+            height: 90%;
+            max-height: 600px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
         .coracao {
             position: absolute;
             color: #ff4d6d;
             animation: flutuar 6s infinite ease-in-out;
+            z-index: 0;
         }
 
         @keyframes flutuar {
@@ -37,15 +52,19 @@
 
         h1 {
             color: #ff4d6d;
-            font-size: 2.5em;
+            font-size: 2em;
             margin: 20px;
+            text-align: center;
+            z-index: 1;
         }
 
         .botoes {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            position: relative;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
         }
 
         button {
@@ -61,20 +80,20 @@
             background-color: #28a745;
             color: white;
             position: relative;
-            z-index: 1;
         }
 
         #nao {
             background-color: #dc3545;
             color: white;
             position: absolute;
-            top: 60px;
-            left: 100px;
+            top: 50px;
+            left: 50px;
+            z-index: 2;
         }
 
         @media (min-width: 600px) {
             h1 {
-                font-size: 3em;
+                font-size: 2.5em;
             }
 
             .botoes {
@@ -85,39 +104,51 @@
 </head>
 <body>
 
-    <h1>Quer namorar comigo?</h1>
-    <div class="botoes">
-        <button id="sim" onclick="aceitou()">Aceito</button>
-        <button id="nao" onmouseover="fugir()">Não</button>
+    <div class="container">
+        <h1>Aceita namorar comigo, Camila?</h1>
+        <div class="botoes">
+            <button id="sim" onclick="aceitou()">Aceito</button>
+        </div>
+        <button id="nao">Não</button>
     </div>
 
     <script>
         const botaoNao = document.getElementById('nao');
+        const container = document.querySelector('.container');
 
         function fugir() {
-            const larguraJanela = window.innerWidth;
-            const alturaJanela = window.innerHeight;
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
 
-            const novaPosX = Math.random() * (larguraJanela - botaoNao.offsetWidth);
-            const novaPosY = Math.random() * (alturaJanela - botaoNao.offsetHeight);
+            const botaoWidth = botaoNao.offsetWidth;
+            const botaoHeight = botaoNao.offsetHeight;
 
-            botaoNao.style.left = novaPosX + 'px';
-            botaoNao.style.top = novaPosY + 'px';
+            const maxX = containerWidth - botaoWidth;
+            const maxY = containerHeight - botaoHeight;
+
+            const novaPosX = Math.random() * maxX;
+            const novaPosY = Math.random() * maxY;
+
+            botaoNao.style.left = `${novaPosX}px`;
+            botaoNao.style.top = `${novaPosY}px`;
         }
+
+        botaoNao.addEventListener('mouseover', fugir);
+        botaoNao.addEventListener('click', fugir);
 
         function aceitou() {
-            alert('Aaaaawn! ❤️ Você me fez muito feliz!');
+            alert('Aaaaawn! ❤️ Você me fez muito feliz, Camila!');
         }
 
-        // Criar corações no fundo
-        for (let i = 0; i < 30; i++) {
+        // Corações no fundo do container
+        for (let i = 0; i < 20; i++) {
             const coracao = document.createElement('div');
             coracao.classList.add('coracao');
-            coracao.style.left = Math.random() * 100 + 'vw';
-            coracao.style.top = Math.random() * 100 + 'vh';
+            coracao.style.left = Math.random() * 100 + '%';
+            coracao.style.top = Math.random() * 100 + '%';
             coracao.textContent = '❤️';
             coracao.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            document.body.appendChild(coracao);
+            container.appendChild(coracao);
         }
     </script>
 
