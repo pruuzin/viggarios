@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Namoro</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #3a3a3a;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .coracao {
+            position: absolute;
+            color: #ff4d6d;
+            animation: flutuar 6s infinite ease-in-out;
+        }
+
+        @keyframes flutuar {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.5em;
+            margin: 20px;
+        }
+
+        .botoes {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #sim {
+            background-color: #28a745;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        #nao {
+            background-color: #dc3545;
+            color: white;
+            position: absolute;
+            top: 60px;
+            left: 100px;
+        }
+
+        @media (min-width: 600px) {
+            h1 {
+                font-size: 3em;
+            }
+
+            .botoes {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quer namorar comigo?</h1>
+    <div class="botoes">
+        <button id="sim" onclick="aceitou()">Aceito</button>
+        <button id="nao" onmouseover="fugir()">Não</button>
+    </div>
+
+    <script>
+        const botaoNao = document.getElementById('nao');
+
+        function fugir() {
+            const larguraJanela = window.innerWidth;
+            const alturaJanela = window.innerHeight;
+
+            const novaPosX = Math.random() * (larguraJanela - botaoNao.offsetWidth);
+            const novaPosY = Math.random() * (alturaJanela - botaoNao.offsetHeight);
+
+            botaoNao.style.left = novaPosX + 'px';
+            botaoNao.style.top = novaPosY + 'px';
+        }
+
+        function aceitou() {
+            alert('Aaaaawn! ❤️ Você me fez muito feliz!');
+        }
+
+        // Criar corações no fundo
+        for (let i = 0; i < 30; i++) {
+            const coracao = document.createElement('div');
+            coracao.classList.add('coracao');
+            coracao.style.left = Math.random() * 100 + 'vw';
+            coracao.style.top = Math.random() * 100 + 'vh';
+            coracao.textContent = '❤️';
+            coracao.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(coracao);
+        }
+    </script>
+
+</body>
+</html>
