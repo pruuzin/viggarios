@@ -60,11 +60,11 @@
 
         .botoes {
             display: flex;
-            flex-direction: column;
             gap: 20px;
             align-items: center;
             justify-content: center;
             z-index: 1;
+            position: relative;
         }
 
         button {
@@ -80,6 +80,7 @@
             background-color: #28a745;
             color: white;
             position: relative;
+            z-index: 2;
         }
 
         #nao {
@@ -87,6 +88,8 @@
             color: white;
             position: absolute;
             z-index: 2;
+            left: calc(50% + 100px);
+            top: 0;
         }
 
         @media (min-width: 600px) {
@@ -106,26 +109,41 @@
         <h1>Aceita namorar comigo, Camila?</h1>
         <div class="botoes">
             <button id="sim" onclick="aceitou()">Aceito</button>
+            <button id="nao">Não</button>
         </div>
-        <button id="nao">Não</button>
     </div>
 
     <script>
         const botaoNao = document.getElementById('nao');
+        const botaoSim = document.getElementById('sim');
         const container = document.querySelector('.container');
 
         function fugir() {
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
 
-            const botaoWidth = botaoNao.offsetWidth;
-            const botaoHeight = botaoNao.offsetHeight;
+            const botaoNaoWidth = botaoNao.offsetWidth;
+            const botaoNaoHeight = botaoNao.offsetHeight;
 
-            const maxX = containerWidth - botaoWidth;
-            const maxY = containerHeight - botaoHeight;
+            const botaoSimRect = botaoSim.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
 
-            const novaPosX = Math.random() * maxX;
-            const novaPosY = Math.random() * maxY;
+            const simX = botaoSimRect.left - containerRect.left;
+            const simY = botaoSimRect.top - containerRect.top;
+            const simWidth = botaoSim.offsetWidth;
+            const simHeight = botaoSim.offsetHeight;
+
+            let novaPosX, novaPosY;
+
+            do {
+                novaPosX = Math.random() * (containerWidth - botaoNaoWidth);
+                novaPosY = Math.random() * (containerHeight - botaoNaoHeight);
+            } while (
+                novaPosX < simX + simWidth &&
+                novaPosX + botaoNaoWidth > simX &&
+                novaPosY < simY + simHeight &&
+                novaPosY + botaoNaoHeight > simY
+            );
 
             botaoNao.style.left = `${novaPosX}px`;
             botaoNao.style.top = `${novaPosY}px`;
@@ -137,9 +155,6 @@
         function aceitou() {
             alert('Arrasou bixa, sábia decisão. Abraços de Isaquinho sz');
         }
-
-        // Posição inicial aleatória do botão "Não"
-        window.onload = fugir;
 
         // Corações no fundo do container
         for (let i = 0; i < 20; i++) {
