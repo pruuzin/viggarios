@@ -65,6 +65,7 @@
             justify-content: center;
             z-index: 1;
             position: relative;
+            flex-wrap: wrap;
         }
 
         button {
@@ -86,10 +87,8 @@
         #nao {
             background-color: #dc3545;
             color: white;
-            position: absolute;
+            position: relative;
             z-index: 2;
-            left: calc(50% + 100px);
-            top: 0;
         }
 
         @media (min-width: 600px) {
@@ -118,7 +117,15 @@
         const botaoSim = document.getElementById('sim');
         const container = document.querySelector('.container');
 
+        let fugindo = false;
+
         function fugir() {
+            if (!fugindo) {
+                // Quando começar a fugir pela primeira vez
+                botaoNao.style.position = 'absolute';
+                fugindo = true;
+            }
+
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
 
