@@ -86,8 +86,6 @@
             background-color: #dc3545;
             color: white;
             position: absolute;
-            top: 50px;
-            left: 50px;
             z-index: 2;
         }
 
@@ -137,8 +135,11 @@
         botaoNao.addEventListener('click', fugir);
 
         function aceitou() {
-            alert('Aaaaawn! ❤️ Você me fez muito feliz, Camila!');
+            alert('Arrasou bixa, sábia decisão. Abraços de Isaquinho sz');
         }
+
+        // Posição inicial aleatória do botão "Não"
+        window.onload = fugir;
 
         // Corações no fundo do container
         for (let i = 0; i < 20; i++) {
